@@ -2,8 +2,7 @@ package com.spring.mvc.chap01;
 
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -45,11 +44,13 @@ public class ControllerV1 {
     // ==> ex ) /spring/major?stu=kim&major=business&grade=3
     @RequestMapping("/major")
     public String major(
-            //parameter 변수명과 자바 변수명이 같으면 @RequestParam 생략가능
+            //클라이언트가 보낸 쿼리스트링과 자바 변수명이 같으면 @RequestParam 생략가능
             String stu,
             @RequestParam("major") String mj,
             @RequestParam(defaultValue = "1") int grade
     ){
+        String major = "전공전공";
+
         System.out.println("stu = " + stu);
         System.out.println("major = " + mj);
         System.out.println("grade = " + grade);
@@ -57,6 +58,42 @@ public class ControllerV1 {
         return "";
     }
 
+    // == 3. 커맨드 객체 이용하기 //QueryParameter를 처리할 클래스 설계 -> DTO
+    // == 쿼리 스트링의 양이 너무 많은 경우 또는 연관성이 있는 경우
+    // ==> ex ) /spring/order?oNum=20230419007-P&goods=구두&amount=3&price=50000...
+
+    @RequestMapping("/order")
+    public String order(OrderRequestDTO dto){
+        System.out.println("dto = " + dto);
+        return "";
+    }
+
+    // == 4. URL에 경로로 붙어있는 데이터 읽기
+    // ==> /spring/member/hong/107
+    //      hong이라는 유저의 107번 게시글을 읽고싶다
+    @RequestMapping("/member/{userName}/{bNo}")
+    public String member(
+            //@PathVariable은 생략불가
+            @PathVariable String userName,
+            @PathVariable long bNo
+    ){
+        System.out.println("userName = " + userName);
+        System.out.println("bNo = " + bNo);
+        return "";
+    }
+
+    //음식 선택 요청 처리
+//    @RequestMapping(value = "/food-select", method = RequestMethod.POST)
+    @PostMapping("/food-select")
+    public String foodSelect(
+            String foodName,
+            String category
+    ){
+        System.out.println("foodName = " + foodName);
+        System.out.println("category = " + category);
+
+        return "";
+    }
 }
 
 
