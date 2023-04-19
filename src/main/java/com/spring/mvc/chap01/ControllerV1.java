@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 //어떤 요청들을 처리할지 공통 URL을 설계
 @RequestMapping("/spring/*") //spring으로 시작하는건 내가 다 받을게
 //이 클래스의 객체를 스프링이 관리하도록 빈을 등록
-@Controller //@Component보다 더 확장된 개념
+@Controller //@Component보다 더 확장된 개념. 컨트롤러 어노테이션으로 이 클래스가 컨트롤러임을 알린다
 public class ControllerV1 {
 
     //세부 요청들은 메서드를 통해 처리
