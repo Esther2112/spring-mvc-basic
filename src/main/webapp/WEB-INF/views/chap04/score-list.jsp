@@ -118,7 +118,7 @@
                     # 학번: ${s.stuNum}, 이름: <a href="#">${s.name}</a>,
                     국어: ${s.kor}점, 영어: ${s.eng}점, 수학: ${s.math}점,
                     총점: ${s.total}점, 평균: ${s.average}점, 학점: ${s.grade}
-                    <a class="del-btn" href="#">삭제</a>
+                    <a class="del-btn" href="/score/remove?stuNum=${s.stuNum}">삭제</a>
                 </li>
             </c:forEach>
 
@@ -136,7 +136,7 @@
     $ul.addEventListener('click', e => {
         if (!e.target.matches('a.del-btn')) return;
 
-        e.preventDefault();
+        e.preventDefault(); //a태그 링크이동 기능 정지
         //console.log('클릭이벤트 발동!');
 
         if (confirm('정말로 삭제하시겠습니까?')) {
