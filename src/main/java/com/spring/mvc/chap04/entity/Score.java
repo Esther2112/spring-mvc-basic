@@ -17,6 +17,10 @@ public class Score {
 
     public Score(ScoreRequestDTO dto) {
         this.name = dto.getName();
+        changeScore(dto);
+    }
+
+    public void changeScore(ScoreRequestDTO dto) {
         this.kor = dto.getKor();
         this.eng = dto.getEng();
         this.math = dto.getMath();
@@ -27,7 +31,7 @@ public class Score {
 
     private void calcTotalAndAvg() {
         this.total = kor + eng + math;
-        this.average = total / 3.0;
+        this.average = Math.round((total / 3.0) * 100) / 100.0;
     }
     private void calcGrade() {
         switch((int)average / 10) {

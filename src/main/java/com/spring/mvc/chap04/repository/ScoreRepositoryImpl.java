@@ -34,6 +34,24 @@ public class ScoreRepositoryImpl implements ScoreRepository {
                  .sorted(Comparator.comparing(Score::getStuNum))
                  .collect(Collectors.toList());
     }
+    public List<Score> findAll(String sort) {
+        Comparator<Score> comparing = Comparator.comparing(Score::getStuNum);
+         switch(sort){
+             case "name" :
+                comparing = Comparator.comparing(Score::getName);
+                break;
+             case "num" :
+                comparing = Comparator.comparing(Score::getStuNum);
+                 break;
+             case "avg" :
+                comparing = Comparator.comparing(Score::getAverage);
+                 break;
+         }
+        return scoreMap.values()
+                 .stream()
+                 .sorted(comparing)
+                 .collect(Collectors.toList());
+    }
 
     @Override
     public boolean save(Score score) {

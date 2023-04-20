@@ -11,6 +11,10 @@ public interface ScoreRepository {
 
     //성적 정보 전체 목록 조회
     List<Score> findAll();
+    //정렬조회
+    default List<Score> findAll(String sort) {
+     return null;
+    } //선택적 오버라이딩 가능
 
     //성적 등록 처리
     boolean save(Score score);
