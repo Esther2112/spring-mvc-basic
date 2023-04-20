@@ -2,10 +2,13 @@ package com.spring.mvc.chap04.repository;
 
 import com.spring.mvc.chap04.entity.Grade;
 import com.spring.mvc.chap04.entity.Score;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Repository
 public class ScoreRepositoryImpl implements ScoreRepository {
 
     //key : 학번, value : 성적정보
@@ -23,9 +26,10 @@ public class ScoreRepositoryImpl implements ScoreRepository {
          scoreMap.put(stu2.getStuNum(), stu2);
          scoreMap.put(stu3.getStuNum(), stu3);
      }
+
     @Override
     public List<Score> findAll() {
-         return new ArrayList<>(scoreMap.values())
+         return scoreMap.values()
                  .stream()
                  .sorted(Comparator.comparing(Score::getStuNum))
                  .collect(Collectors.toList());
