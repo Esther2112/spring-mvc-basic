@@ -1,8 +1,10 @@
 package com.spring.mvc.chap04.controller;
 
+import com.spring.mvc.chap04.dto.ScoreListResponseDTO;
 import com.spring.mvc.chap04.dto.ScoreRequestDTO;
 import com.spring.mvc.chap04.entity.Score;
 import com.spring.mvc.chap04.repository.ScoreRepository;
+import com.spring.mvc.chap04.service.ScoreService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /*
     # 요청 URL
@@ -35,7 +38,8 @@ import java.util.List;
 public class ScoreController {
 
     //저장소에 의존해야 데이터를 받아서 클라이언트에 응답할 수 있음
-    private final ScoreRepository repository;
+//    private final ScoreRepository repository; //서비스를 이용하여 컨트롤러의 레파리토리 의존성 제거
+    private final ScoreService scoreService;
 
     //만약 클래스의 생성자가 단 1개라면
     //자동으로 @Autowired를 써줌
@@ -52,8 +56,10 @@ public class ScoreController {
         System.out.println("/score/list : GET!");
         System.out.println("정렬 요구사항: " + sort);
 
-        List<Score> scoreList = repository.findAll(sort);
-        model.addAttribute("sList", scoreList);
+        List<ScoreListResponseDTO> scoreListResponseDTOList
+                = scoreService.getList(sort);
+
+        model.addAttribute("sList", scoreListResponseDTOList);
         return "chap04/score-list";
     }
 
@@ -64,11 +70,7 @@ public class ScoreController {
         //입력데이터(쿼리스트링) 읽기
         System.out.println("/score/register : POST! - " + dto);
 
-        //dto(ScoreDTO)를 entity(Score)로 변환해야 함
-        Score score = new Score(dto);
-
-        //save 명령
-        repository.save(score);
+        scoreService.insertScore(dto);
 
         /*
             등록 요청에서 JSP 뷰 포워딩을 하면
@@ -84,7 +86,9 @@ public class ScoreController {
     @GetMapping("/remove")
     public String remove(int stuNum){
         System.out.println("/score/remove : GET!");
-        repository.deleteByStuNum(stuNum);
+
+        scoreService.delete(stuNum);
+
         return "redirect:/score/list";
     }
 
@@ -92,21 +96,29 @@ public class ScoreController {
     @GetMapping("/detail")
     public String detail(int stuNum, Model model){
         System.out.println("/score/detail : GET!");
-        Score score = repository.findByStuNum(stuNum);
-        model.addAttribute("score", score);
-        System.out.println(score);
+        retrieve(stuNum, model);
         return "chap04/score-detail";
     }
+
+    private void retrieve(int stuNum, Model model) {
+        Score score = scoreService.retrieve(stuNum);
+        model.addAttribute("score", score);
+    }
+
+    // 5. 수정화면 열어주기
     @GetMapping("/update")
     public String update(int stuNum, Model model){
-        Score score = repository.findByStuNum(stuNum);
-        model.addAttribute("s", score);
+        retrieve(stuNum, model);
         return "chap04/score-modify";
     }
 
+//    6. 수정 완료 처리하기
     @PostMapping("/modify")
-    public String modify(int stuNum, ScoreRequestDTO dto){
-        Score score = repository.findByStuNum(stuNum);
+    public String modify(
+            @RequestParam(required = true) int stuNum //필수파라미터 설정
+            , ScoreRequestDTO dto
+    ){
+        Score score = scoreService.retrieve(stuNum);
         score.changeScore(dto);
 
         return "redirect:/score/detail?stuNum=" + stuNum;
