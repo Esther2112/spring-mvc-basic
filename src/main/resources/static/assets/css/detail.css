@@ -1,0 +1,34 @@
+section.card {
+    width: 500px;
+    /* border: 1px solid #000; */
+    box-shadow: 0 15px 0 gray;
+    margin: 100px auto;
+    border-radius: 25px;
+    overflow: hidden;
+}
+section.card .card-title-wrapper {
+    padding: 15px;
+    /* border: 1px solid #000; */
+    background: #ffe554;
+}
+section.card .card-content {
+    padding: 15px;
+
+}
+section.card .back {
+    margin: 15px;
+    padding: 5px 10px;
+    background: #ffe554;
+    border-radius: 5px;
+    /* border: 1px solid #000; */
+}
+section.card .modify {
+    margin: 15px 0;
+    padding: 5px 10px;
+    background: #ffe554;
+    border-radius: 5px;
+    /* border: 1px solid #000; */
+}
+section.card button:hover {
+    cursor: pointer;
+}

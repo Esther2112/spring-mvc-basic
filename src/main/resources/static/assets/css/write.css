@@ -1,0 +1,48 @@
+.card {
+    width: 500px;
+    /* border: 1px solid #000; */
+    box-shadow: 0 15px 0 gray;
+    margin: 100px auto;
+    border-radius: 25px;
+    overflow: hidden;
+}
+.card input {
+    height: 30px;
+    width: 300px;
+    background: none;
+    border: none;
+    font-size: 20px;
+}
+.card .card-title-wrapper {
+    padding: 15px;
+    /* border: 1px solid #000; */
+    background: #ffe554;
+}
+.card .card-content {
+    padding: 15px;
+
+}
+textarea {
+    font-size: 20px;
+    width: 100%;
+    height: 200px;
+    /* border: none; */
+    resize: none;
+}
+.card .back {
+    margin: 15px;
+    padding: 5px 10px;
+    background: #ffe554;
+    border-radius: 5px;
+    /* border: 1px solid #000; */
+}
+.card .regist {
+    margin: 15px 0;
+    padding: 5px 10px;
+    background: #ffe554;
+    border-radius: 5px;
+    /* border: 1px solid #000; */
+}
+.card button:hover {
+    cursor: pointer;
+}
