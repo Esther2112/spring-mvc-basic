@@ -71,7 +71,7 @@ public class BoardController {
     @GetMapping("/delete")
     public String delete(int boardNo){
         boardService.delete(boardNo);
-        System.out.println("delete 컨트롤러까지 왔다");
+        System.out.println("delete " + boardNo);
         return "redirect:/board/list";
     }
 }

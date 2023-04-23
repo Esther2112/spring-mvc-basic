@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -32,34 +32,34 @@
     </div>
 
     <div class="card-container">
-        <c:forEach var = "b" items="${bList}">
-        <div class="card-wrapper">
-            <section class="card" data-bno="${b.boardNo}">
+        <c:forEach var="b" items="${bList}">
+            <div class="card-wrapper">
                 <a href="/board/detail?boardNo=${b.boardNo}">
-                <div class="card-title-wrapper">
-                    <h2 class="card-title">${b.title}</h2>
-                    <div class="time-view-wrapper">
-                        <div class="time"><i class="far fa-clock"></i>${b.simpleTime}</div>
-                        <div class="view">
-                            <i class="fas fa-eye"></i>
-                            <span class="view-count">${b.viewCount}</span>
+                    <section class="card">
+                        <div class="card-title-wrapper">
+                            <h2 class="card-title">${b.title}</h2>
+                            <div class="time-view-wrapper">
+                                <div class="time"><i class="far fa-clock"></i>${b.simpleTime}</div>
+                                <div class="view">
+                                    <i class="fas fa-eye"></i>
+                                    <span class="view-count">${b.viewCount}</span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="card-content">
-                    <p>
-                        ${b.textContent}
-                    </p>
-                </div>
+                        <div class="card-content">
+                            <p>
+                                    ${b.textContent}
+                            </p>
+                        </div>
+                    </section>
                 </a>
-            </section>
-            <div class="card-btn-group">
-                <button class="del-btn">
-                    <i class="fas fa-times"></i>
-                    <input type = "hidden" value = ${b.boardNo}>
-                </button>
+                <form action="/board/delete?" method="get" class="card-btn-group">
+                    <button class="del-btn">
+                        <input class="hidden" type="hidden" name="boardNo" value= ${b.boardNo}>
+                        <i class="fas fa-times"></i>
+                    </button>
+                </form>
             </div>
-        </div>
         </c:forEach>
 
     </div>
@@ -110,13 +110,15 @@
     $cardContainer.addEventListener('mouseout', removeHover);
 
     // write button event
-    document.querySelector('.add-btn').onclick = ()=> {
+    document.querySelector('.add-btn').onclick = () => {
         window.location.href = '/board/write';
     };
-    document.querySelector('.del-btn').onclick = ()=> {
-        let bno = document.querySelector("input").value;
-        window.location.href = '/board/delete?boardNo=' + bno;
-    };
+
+    //삭제하기
+    // document.querySelector('.del-btn').onclick = () => {
+    //     let bno = document.querySelector(".hidden").value;
+    //     window.location.href = '/board/delete?boardNo=' +bno;
+    // };
 
 
 </script>
