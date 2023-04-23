@@ -68,4 +68,10 @@ public class BoardController {
     }
 
     //게시물 삭제하기 - 모달?_?
+    @GetMapping("/delete")
+    public String delete(int boardNo){
+        boardService.delete(boardNo);
+        System.out.println("delete 컨트롤러까지 왔다");
+        return "redirect:/board/list";
+    }
 }

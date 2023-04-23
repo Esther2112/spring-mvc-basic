@@ -29,7 +29,9 @@ public class BoardService {
 
     //특정 게시글 찾기
     public SimpleTimeDTO findSimpleOne(int boardNo) {
-        return new SimpleTimeDTO(boardRepository.findOne(boardNo));
+        Board target = boardRepository.findOne(boardNo);
+        target.setViewCount(target.getViewCount()+1);
+        return new SimpleTimeDTO(target);
     }
 
     //게시글 등록하기
@@ -46,5 +48,8 @@ public class BoardService {
     }
 
     //게시글 삭제하기
+    public boolean delete(int boardNo) {
+        return boardRepository.deleteByNo(boardNo);
+    }
 
 }

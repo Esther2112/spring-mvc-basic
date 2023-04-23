@@ -42,6 +42,7 @@ public class BoardRepositoryImpl implements BoardRepository{
 
     @Override
     public boolean deleteByNo(int boardNo) {
-        return false;
+        boardMap.remove(boardNo);
+        return true;
     }
 }

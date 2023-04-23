@@ -20,6 +20,5 @@
     <button class = "regist">regist</button>
 </form>
 
-</script>
 </body>
 </html>

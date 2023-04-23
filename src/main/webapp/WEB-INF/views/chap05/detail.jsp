@@ -24,12 +24,15 @@
             ${b.textContent}
         </p>
     </div>
-    <button class = "back" onclick="history.back()">back</button>
+    <button class = "back"">back</button>
     <button class = "modify">modify</button>
 </section>
 
 <script>
-    document.querySelector(".modify").onclick = e => {
+    document.querySelector(".back").onclick = () => {
+        window.location.href = "/board/list";
+    }
+    document.querySelector(".modify").onclick = () => {
         window.location.href = "/board/modify?boardNo=${b.boardNo}";
     }
 </script>

@@ -33,8 +33,9 @@
 
     <div class="card-container">
         <c:forEach var = "b" items="${bList}">
-        <a href="/board/detail?boardNo=${b.boardNo}" class="card-wrapper">
-            <section class="card">
+        <div class="card-wrapper">
+            <section class="card" data-bno="${b.boardNo}">
+                <a href="/board/detail?boardNo=${b.boardNo}">
                 <div class="card-title-wrapper">
                     <h2 class="card-title">${b.title}</h2>
                     <div class="time-view-wrapper">
@@ -50,13 +51,15 @@
                         ${b.textContent}
                     </p>
                 </div>
+                </a>
             </section>
             <div class="card-btn-group">
                 <button class="del-btn">
                     <i class="fas fa-times"></i>
+                    <input type = "hidden" value = ${b.boardNo}>
                 </button>
             </div>
-        </a>
+        </div>
         </c:forEach>
 
     </div>
@@ -107,9 +110,14 @@
     $cardContainer.addEventListener('mouseout', removeHover);
 
     // write button event
-    document.querySelector('.add-btn').onclick = e => {
+    document.querySelector('.add-btn').onclick = ()=> {
         window.location.href = '/board/write';
     };
+    document.querySelector('.del-btn').onclick = ()=> {
+        let bno = document.querySelector("input").value;
+        window.location.href = '/board/delete?boardNo=' + bno;
+    };
+
 
 </script>
 
