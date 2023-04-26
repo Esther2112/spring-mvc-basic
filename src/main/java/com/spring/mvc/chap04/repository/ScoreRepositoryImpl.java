@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Repository
+@Repository("memory")
 public class ScoreRepositoryImpl implements ScoreRepository {
 
     //key : 학번, value : 성적정보
@@ -29,11 +29,10 @@ public class ScoreRepositoryImpl implements ScoreRepository {
 
     @Override
     public List<Score> findAll() {
-         return scoreMap.values()
-                 .stream()
-                 .sorted(Comparator.comparing(Score::getStuNum))
-                 .collect(Collectors.toList());
+        return null;
     }
+
+    @Override
     public List<Score> findAll(String sort) {
         Comparator<Score> comparing = Comparator.comparing(Score::getStuNum);
          switch(sort){
