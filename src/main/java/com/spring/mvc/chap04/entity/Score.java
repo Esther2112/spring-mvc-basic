@@ -2,12 +2,14 @@ package com.spring.mvc.chap04.entity;
 
 import com.spring.mvc.chap04.dto.ScoreRequestDTO;
 import lombok.*;
+import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @Setter @Getter @ToString @EqualsAndHashCode
 @NoArgsConstructor @AllArgsConstructor
+@Builder
 public class Score {
 
     private String name; //학생이름
@@ -34,6 +36,7 @@ public class Score {
     }
 
     public void changeScore(ScoreRequestDTO dto) {
+        this.stuNum = dto.getStuNum();
         this.kor = dto.getKor();
         this.eng = dto.getEng();
         this.math = dto.getMath();

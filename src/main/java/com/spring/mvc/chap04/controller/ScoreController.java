@@ -3,10 +3,9 @@ package com.spring.mvc.chap04.controller;
 import com.spring.mvc.chap04.dto.ScoreListResponseDTO;
 import com.spring.mvc.chap04.dto.ScoreRequestDTO;
 import com.spring.mvc.chap04.entity.Score;
-import com.spring.mvc.chap04.repository.ScoreRepository;
 import com.spring.mvc.chap04.service.ScoreService;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /*
     # 요청 URL
@@ -39,6 +37,7 @@ public class ScoreController {
 
     //저장소에 의존해야 데이터를 받아서 클라이언트에 응답할 수 있음
 //    private final ScoreRepository repository; //서비스를 이용하여 컨트롤러의 레파리토리 의존성 제거
+    @Autowired
     private final ScoreService scoreService;
 
     //만약 클래스의 생성자가 단 1개라면
@@ -52,7 +51,7 @@ public class ScoreController {
     //1. 성적등록화면 띄우기 + 정보 목록 조회
     @GetMapping("/list")
     public String list(Model model,
-                       @RequestParam(defaultValue = "num") String sort){
+                       @RequestParam(defaultValue = "stu_num") String sort){
         System.out.println("/score/list : GET!");
         System.out.println("정렬 요구사항: " + sort);
 
@@ -118,8 +117,9 @@ public class ScoreController {
             @RequestParam(required = true) int stuNum //필수파라미터 설정
             , ScoreRequestDTO dto
     ){
-        Score score = scoreService.retrieve(stuNum);
-        score.changeScore(dto);
+
+        scoreService.changeScore(new Score(dto));
+//        score.changeScore(dto);
 
         return "redirect:/score/detail?stuNum=" + stuNum;
     }
