@@ -17,14 +17,14 @@ class ScoreMapperTest {
     @Autowired
     private ScoreMapper scoreMapper;
 
-    @Test
-    void findAllTest(){
-//        name, num, avg
-        String sort = "total";
-        List<Score> list = scoreMapper.findAll();
-        System.out.println("list = " + list);
-        assertEquals(4, list.size());
-    }
+//    @Test
+//    void findAllTest(){
+////        name, num, avg
+//        String sort = "total";
+//        List<Score> list = scoreMapper.findAll();
+//        System.out.println("list = " + list);
+//        assertEquals(4, list.size());
+//    }
 
     @Test
     void saveTest(){

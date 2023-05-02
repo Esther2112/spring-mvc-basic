@@ -3,39 +3,48 @@ package com.spring.mvc.chap05.controller;
 import com.spring.mvc.chap05.dto.ModifyDTO;
 import com.spring.mvc.chap05.dto.SimpleTimeDTO;
 import com.spring.mvc.chap05.dto.WriteDTO;
+import com.spring.mvc.chap05.dto.page.Page;
+import com.spring.mvc.chap05.dto.page.PageMaker;
+import com.spring.mvc.chap05.dto.page.Search;
 import com.spring.mvc.chap05.entity.Board;
 import com.spring.mvc.chap05.service.BoardService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/board")
+@Slf4j
 public class BoardController {
 
     private final BoardService boardService;
 
     //게시물 목록조회
     @GetMapping("/list")
-    public String list(Model model) {
-        List<SimpleTimeDTO> bList = boardService.getList();
+    public String list(Search page, Model model) {
+        log.info("/board/list : GET");
+        log.info("page : {}", page);
+        List<SimpleTimeDTO> bList = boardService.getList(page);
+
+        //페이징 알고리즘 작동
+        PageMaker maker = new PageMaker(page, boardService.getCount(page));
         model.addAttribute("bList", bList);
-        System.out.println("bList = " + bList);
+        model.addAttribute("maker", maker);
+        model.addAttribute("s", page);
         return "chap05/list";
     }
 
     //게시물 상세조회
     @GetMapping("/detail")
-    public String detail(int boardNo, Model model){
+    public String detail(int boardNo, @ModelAttribute("s") Search search, Model model){
         SimpleTimeDTO board = boardService.findSimpleOne(boardNo);
         model.addAttribute("b", board);
+//        model.addAttribute("s", search);
         return "chap05/detail";
     }
 

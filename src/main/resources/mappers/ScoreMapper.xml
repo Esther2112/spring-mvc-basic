@@ -4,11 +4,11 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- namespace에는 인터페이스 풀네임(패키지 + 인터페이스 이름) -->
 <mapper namespace="com.spring.mvc.chap04.repository.ScoreMapper">
-    <resultMap id="select" type="com.spring.mvc.chap04.entity.Score">
-        <result property="stuNum" column="stu_num"></result>
-    </resultMap>
+<!--    <resultMap id="select" type="com.spring.mvc.chap04.entity.Score">-->
+<!--        <result property="stuNum" column="stu_num"></result>-->
+<!--    </resultMap>-->
 
-    <select id="findAll" resultMap="select">
+    <select id="findAll" resultType="score">
         select * from tbl_score
         <if test = 'sort.equals("average")'>
             order by ${sort} desc
@@ -18,7 +18,7 @@
         </if>
     </select>
 
-    <select id="findByStuNum" resultMap="select">
+    <select id="findByStuNum" resultType="score">
         select * from tbl_score where stu_num = #{stuNum}
     </select>
 

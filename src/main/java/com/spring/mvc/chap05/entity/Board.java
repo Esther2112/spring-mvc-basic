@@ -8,6 +8,7 @@ import java.util.Objects;
 @Getter @Setter
 @ToString
 @NoArgsConstructor @AllArgsConstructor
+@Builder
 public class Board {
 
     private int boardNo; //게시글 번호

@@ -15,7 +15,7 @@
             <div class="time"><i class="far fa-clock"></i>${b.simpleTime}</div>
             <div class="view">
                 <i class="fas fa-eye"></i>
-                <span class="view-count">${b.viewCount}</span>
+                <span class="view-count">${b.viewCount + 1}</span>
             </div>
         </div>
     </div>
@@ -24,13 +24,13 @@
             ${b.textContent}
         </p>
     </div>
-    <button class = "back"">back</button>
+    <button class = "back">back</button>
     <button class = "modify">modify</button>
 </section>
 
 <script>
     document.querySelector(".back").onclick = () => {
-        window.location.href = "/board/list";
+        window.location.href = "/board/list?pageNo=${s.pageNo}&type=${s.type}&keyword=${s.keyword}";
     }
     document.querySelector(".modify").onclick = () => {
         window.location.href = "/board/modify?boardNo=${b.boardNo}";

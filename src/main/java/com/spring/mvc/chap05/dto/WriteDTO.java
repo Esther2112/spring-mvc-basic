@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class WriteDTO {
     private String title;
     private String textContent;
