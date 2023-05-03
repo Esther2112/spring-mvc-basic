@@ -76,5 +76,16 @@ class ReplyMapperTest {
         assertEquals(2, replyMapper.count(boardNo));
     }
 
+//    @Test
+//    void bulkReplyInsert(){
+//        for (int i = 0; i < 300; i++) {
+//            Reply reply = Reply.builder()
+//                    .boardNo(298L)
+//                    .replyText("댓글내용용 " + i)
+//                    .replyWriter("뚯뚜루")
+//                    .build();
+//            replyMapper.save(reply);
+//        }
+//    }
 
 }
