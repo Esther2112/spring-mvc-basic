@@ -35,6 +35,7 @@ input {
 .wrap {
     font-size: 15px;
     font-family: 'Noto Sans KR', sans-serif;
+    margin-top: 120px;
 }
 .hide {
     display: none !important;

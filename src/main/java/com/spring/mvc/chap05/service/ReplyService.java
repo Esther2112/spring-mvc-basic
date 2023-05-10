@@ -58,9 +58,9 @@ public class ReplyService {
     //댓글 삭제 서비스
     @Transactional //트랜잭션 처리
     public ReplyListResponseDTO delete(final long replyNo) throws Exception {
+        long boardNo = replyMapper.findOne(replyNo).getBoardNo();
         replyMapper.deleteOne(replyNo);
 
-        long boardNo = replyMapper.findOne(replyNo).getBoardNo();
         return getList(
                 boardNo, new Page(1, 10)
         );

@@ -91,12 +91,11 @@ public class ReplyController {
     //댓글 수정 요청
     @RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH})
     public ResponseEntity<?> modify (
-            @Validated @RequestBody ReplyModifyRequestDTO dto,
-            BindingResult result
+            @Validated @RequestBody ReplyModifyRequestDTO dto
     ){
         try {
             ReplyListResponseDTO responseDTO = replyService.modify(dto);
-            return ResponseEntity.ok().body(result.toString());
+            return ResponseEntity.ok().body(responseDTO);
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body(e.getMessage());
         }

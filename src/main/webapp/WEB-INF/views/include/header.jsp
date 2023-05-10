@@ -5,7 +5,7 @@
 <header>
     <div class="inner-header">
         <h1 class="logo">
-            <a href="#">
+            <a href="/board/list">
                 <img src="/assets/img/logo.png" alt="로고이미지">
             </a>
         </h1>
@@ -25,8 +25,8 @@
             <li><a href="#">About</a></li>
             <li><a href="/board/list">Board</a></li>
             <li><a href="#">Contact</a></li>
-            <li><a href="#">Sign Up</a></li>
-            <li><a href="#">Sign In</a></li>
+            <li><a href="/members/sign-up">Sign Up</a></li>
+            <li><a href="/members/sign-in">Sign In</a></li>
 
         </ul>
     </nav>
