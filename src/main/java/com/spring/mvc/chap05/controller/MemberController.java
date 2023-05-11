@@ -12,6 +12,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 @Controller
 @Slf4j
 @RequiredArgsConstructor
@@ -50,8 +55,16 @@ public class MemberController {
 
     //로그인 양식 요청
     @GetMapping("/sign-in")
-    public String signIn(){
+    public String signIn(HttpServletRequest request){
         log.info("/members/sign-in GET - forwarding to jsp");
+
+        //요청정보 헤어 안에는 referer라는 키가 있는데
+        //여기 값은 이 페이지로 들어올때 어디에서 왔는지에 대한
+        //URI 정보가 기록되어 있음
+
+//        String referer =
+//        log.info("referer : {}", referer);
+
         return "/members/sign-in";
     }
 
@@ -60,13 +73,28 @@ public class MemberController {
     public String signIn(LoginRequestDTO dto
                          //리다이렉션시 두번째 응답에 데이터를 보내기 위해
                          // Model이 아닌 RedirectAttributes 객체 사용
-            , RedirectAttributes ra){
+            , RedirectAttributes ra
+            , HttpServletRequest request
+    ){
         log.info("/members/sign-in POST ! {} ", dto);
 
         LoginResult result = memberService.authenticate(dto);
 
         //로그인 성공시
         if(result == LoginResult.SUCCESS) {
+
+            //서버에서 세션에 로그인 정보를 저장
+            memberService.maintainLoginState(request.getSession(), dto.getAccount());
+
+//            //쿠키 만들기
+//            Cookie loginCookie = new Cookie("login", "도롱뇽");
+//            //쿠키 셋팅 ( 이 경로에서만 쿠키 들고 다니세요. 쿠키 유효범위 설정 )
+//            loginCookie.setPath("/"); //모든 경로
+//            loginCookie.setMaxAge(60 * 60 * 24); // 초단위 수명 지정. 하루 쿠키
+//
+//            //쿠키를 응답시 실어서 클라이언트에게 전송
+//            response.addCookie(loginCookie);
+
             return "redirect:/";
         }
 
@@ -74,5 +102,17 @@ public class MemberController {
         ra.addFlashAttribute("msg", result);
         //로그인 실패시
         return "redirect:/members/sign-in";
+    }
+
+    //로그아웃 요청 처리
+    @GetMapping("/sign-out")
+    public String signOut(HttpSession session){
+        //세션에서 로그인 정보를 제거
+        session.removeAttribute("login");
+
+        //세션을 초기화
+        session.invalidate();
+
+        return "redirect:/";
     }
 }
