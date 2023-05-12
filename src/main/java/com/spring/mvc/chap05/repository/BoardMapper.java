@@ -22,7 +22,7 @@ public interface BoardMapper {
     boolean modify(ModifyDTO dto);
 
     //게시물 등록
-    boolean save(WriteDTO board);
+    boolean save(Board board);
 
     //게시물 삭제
     boolean deleteByNo(int boardNo);

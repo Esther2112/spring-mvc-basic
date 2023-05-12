@@ -8,6 +8,7 @@ import com.spring.mvc.chap05.dto.page.PageMaker;
 import com.spring.mvc.chap05.dto.page.Search;
 import com.spring.mvc.chap05.entity.Board;
 import com.spring.mvc.chap05.service.BoardService;
+import com.spring.mvc.util.LoginUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -34,14 +36,14 @@ public class BoardController {
             , HttpServletRequest request
     ) {
 
-        boolean flag = false;
+//        boolean flag = false;
 
-        //세션을 확인
-        Object login = request.getSession().getAttribute("login");
-
-        if(login != null) {
-            flag = true;
-        }
+//        세션을 확인
+//        Object login = request.getSession().getAttribute("login");
+//
+//        if(login != null) {
+//            flag = true;
+//        }
 
 //        //쿠키를 확인
 //        Cookie[] cookies = request.getCookies();
@@ -51,7 +53,7 @@ public class BoardController {
 //                break;
 //            }
 //        }
-        if(!flag) return "redirect:/members/sign-in";
+//        if(!flag) return "redirect:/members/sign-in";
 
         log.info("/board/list : GET");
         log.info("page : {}", page);
@@ -76,14 +78,19 @@ public class BoardController {
 
     //게시물 작성
     @GetMapping("/write")
-    public String write(){
+    public String write(HttpSession session){
+
+//        if(!LoginUtil.isLogin(session)){
+//            return "redirect:/members/sign-in";
+//        }
+
         return "chap05/write";
     }
 
     //게시물 등록
     @PostMapping("/regist")
-    public String regist(WriteDTO dto){
-        boardService.write(dto);
+    public String regist(WriteDTO dto, HttpSession session){
+        boardService.write(dto, session);
         return "redirect:/board/list";
     }
 

@@ -7,7 +7,7 @@
     <select id="findAll" resultType="board">
         SELECT
             board_no, title,
-            text_content, view_count, reg_date_time
+            text_content, view_count, reg_date_time, account
         FROM tbl_board
         <if test = 'type == "title"'>
         WHERE title LIKE CONCAT('%', #{keyword}, '%')
@@ -26,9 +26,11 @@
 
     <select id="findOne" resultType="board">
         SELECT
-            board_no, title,
-            text_content, view_count, reg_date_time
-        FROM tbl_board
+            b.board_no, b.title,
+            b.text_content, b.view_count, b.reg_date_time, m.account, m.name as writer
+        FROM tbl_board b
+        join tbl_member m
+        on b.account = m.account
         WHERE board_no = #{boardNo}
     </select>
 
@@ -49,8 +51,8 @@
 
     <insert id="save">
         INSERT INTO tbl_board
-            (title, text_content)
-        VALUES (#{title}, #{textContent})
+            (title, text_content, account)
+        VALUES (#{title}, #{textContent}, #{account})
     </insert>
 
     <update id="modify">

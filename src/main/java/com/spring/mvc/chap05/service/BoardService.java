@@ -7,9 +7,12 @@ import com.spring.mvc.chap05.dto.page.Page;
 import com.spring.mvc.chap05.dto.page.Search;
 import com.spring.mvc.chap05.entity.Board;
 import com.spring.mvc.chap05.repository.BoardMapper;
+import com.spring.mvc.util.LoginUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,8 +40,13 @@ public class BoardService {
     }
 
     //게시글 등록하기
-    public boolean write(WriteDTO dto) {
-        return boardRepository.save(dto);
+    public boolean write(WriteDTO dto, HttpSession session) {
+        Board board = Board.builder()
+                .title(dto.getTitle())
+                .textContent(dto.getTextContent())
+                .account(LoginUtil.getCurrentLoginAccount(session))
+                .build();
+        return boardRepository.save(board);
     }
 
     //게시글 수정하기

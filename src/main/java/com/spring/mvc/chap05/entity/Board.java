@@ -16,6 +16,8 @@ public class Board {
     private int viewCount; //조회수
     private String textContent; //글내용
     private LocalDateTime regDateTime; //작성일자시간
+    private String account; //작성자 계정명
+    private String writer;
 
     @Override
     public boolean equals(Object o) {
@@ -29,4 +31,5 @@ public class Board {
     public int hashCode() {
         return Objects.hash(boardNo);
     }
+
 }

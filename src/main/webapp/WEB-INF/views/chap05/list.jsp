@@ -19,7 +19,9 @@
 
     <div class="main-title-wrapper">
         <h1 class="main-title">꾸러기 게시판</h1>
-        <button class="add-btn">새 글 쓰기</button>
+        <c:if test = "${login != null}">
+            <button class="add-btn">새 글 쓰기</button>
+        </c:if>
     </div>
 
     <div class="top-section">
@@ -66,12 +68,14 @@
                         </div>
                     </section>
                 </a>
+                <c:if test = "${b.account == login.account && login != null}">
                 <form action="/board/delete?" method="get" class="card-btn-group">
                     <button class="del-btn">
                         <input class="hidden" type="hidden" name="boardNo" value= ${b.boardNo}>
                         <i class="fas fa-times"></i>
                     </button>
                 </form>
+                </c:if>
             </div>
         </c:forEach>
 

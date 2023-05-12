@@ -25,6 +25,8 @@
 <body>
 <section class="card">
     <div class="card-title-wrapper">
+        <label for = "writer">작성자</label>
+        <div id="writer" name="writer">${b.writer}</div>
         <h2 class="card-title">${b.title}</h2>
         <div class="time-view-wrapper">
             <div class="time"><i class="far fa-clock"></i>${b.simpleTime}</div>

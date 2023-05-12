@@ -16,6 +16,8 @@ public class SimpleTimeDTO {
     private int viewCount; //조회수
     private String simpleTime; //작성일자시간
     private String textContent;
+    private String account;
+    private String writer;
 
     public SimpleTimeDTO(Board board) {
         this.boardNo = board.getBoardNo();
@@ -23,6 +25,8 @@ public class SimpleTimeDTO {
         this.viewCount = board.getViewCount();
         this.textContent = board.getTextContent();
         this.simpleTime = getSimpleTime(board);
+        this.account = board.getAccount();
+        this.writer = board.getWriter();
     }
 
     public String getShortTitle(Board board){
