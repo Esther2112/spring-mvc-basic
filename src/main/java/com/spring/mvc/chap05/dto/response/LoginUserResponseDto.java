@@ -12,4 +12,5 @@ public class LoginUserResponseDto {
     private String account;
     private String nickname;
     private String email;
+    private String auth;
 }

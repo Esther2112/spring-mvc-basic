@@ -68,7 +68,7 @@
                         </div>
                     </section>
                 </a>
-                <c:if test = "${b.account == login.account && login != null}">
+                <c:if test = "${b.account == login.account}">
                 <form action="/board/delete?" method="get" class="card-btn-group">
                     <button class="del-btn">
                         <input class="hidden" type="hidden" name="boardNo" value= ${b.boardNo}>

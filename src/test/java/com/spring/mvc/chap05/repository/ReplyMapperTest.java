@@ -22,27 +22,27 @@ class ReplyMapperTest {
     ReplyMapper replyMapper;
 
 
-    @Test
-    @DisplayName("게시물 300개 등록하고 1000개의 댓글 등록")
-    void bulkInsertTest(){
-        for (int i = 1; i <=300 ; i++) {
-            WriteDTO dto = WriteDTO.builder()
-                    .title("재밌는 게시물 " + i)
-                    .textContent("노잼 게시물 내용 " + i)
-                    .build();
-            boardMapper.save(dto);
-        }
-        assertEquals(300, boardMapper.count(new Search()));
-
-        for (int i = 1; i <= 300 ; i++) {
-            Reply r = Reply.builder()
-                    .replyWriter("잼민이 " + i)
-                    .replyText("개똥아 ~ " + i)
-                    .boardNo((long) (Math.random() * 300 + 1))
-                    .build();
-            replyMapper.save(r);
-        }
-    }
+//    @Test
+//    @DisplayName("게시물 300개 등록하고 1000개의 댓글 등록")
+//    void bulkInsertTest(){
+//        for (int i = 1; i <=300 ; i++) {
+//            WriteDTO dto = WriteDTO.builder()
+//                    .title("재밌는 게시물 " + i)
+//                    .textContent("노잼 게시물 내용 " + i)
+//                    .build();
+//            boardMapper.save(dto);
+//        }
+//        assertEquals(300, boardMapper.count(new Search()));
+//
+//        for (int i = 1; i <= 300 ; i++) {
+//            Reply r = Reply.builder()
+//                    .replyWriter("잼민이 " + i)
+//                    .replyText("개똥아 ~ " + i)
+//                    .boardNo((long) (Math.random() * 300 + 1))
+//                    .build();
+//            replyMapper.save(r);
+//        }
+//    }
 
     @Test
     @DisplayName("3번 게시물에 댓글을 등록하면 총 댓글 수는 4개여야 한다")

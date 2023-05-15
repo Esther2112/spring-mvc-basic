@@ -15,16 +15,22 @@ class BoardMapperTest {
     @Autowired
     BoardMapper mapper;
 
+//    @Test
+//    @DisplayName("게시물 300개를 작성해야 한다.")
+//    void bulkInsertTest(){
+//        //given
+//        for (int i = 1; i <= 300 ; i++) {
+//        WriteDTO dto = WriteDTO.builder()
+//                .title("테스트제목 " + i)
+//                .textContent("테스트내용 " + i)
+//                .build();
+//        mapper.save(dto);
+//        }
+//    }
+    
     @Test
-    @DisplayName("게시물 300개를 작성해야 한다.")
-    void bulkInsertTest(){
-        //given
-        for (int i = 1; i <= 300 ; i++) {
-        WriteDTO dto = WriteDTO.builder()
-                .title("테스트제목 " + i)
-                .textContent("테스트내용 " + i)
-                .build();
-        mapper.save(dto);
-        }
+    void findTest(){
+        Board board = mapper.findOne(306);
+        System.out.println("board = " + board);
     }
 }

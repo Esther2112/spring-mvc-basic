@@ -4,6 +4,7 @@ import com.spring.mvc.chap05.dto.LoginRequestDTO;
 import com.spring.mvc.chap05.dto.SignUpRequestDTO;
 import com.spring.mvc.chap05.service.LoginResult;
 import com.spring.mvc.chap05.service.MemberService;
+import com.spring.mvc.util.LoginUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import static com.spring.mvc.util.LoginUtil.*;
+
 @Controller
 @Slf4j
 @RequiredArgsConstructor
@@ -28,14 +31,14 @@ public class MemberController {
     //회원 가입 요청
     //회원가입 양식 요청
     @GetMapping("/sign-up")
-    public String signUp(){
+    public String signUp() {
         log.info("/members/sign-up GET - forwarding to jsp");
         return "members/sign-up";
     }
 
     //회원가입 처리 요청
     @PostMapping("/sign-up")
-    public String signUp(SignUpRequestDTO dto){
+    public String signUp(SignUpRequestDTO dto) {
         log.info("/members/sign-up POST ! - {}", dto);
 
         boolean flag = memberService.join(dto);
@@ -47,7 +50,7 @@ public class MemberController {
     //비동기 요청 처리
     @GetMapping("/check")
     @ResponseBody
-    public ResponseEntity<?> check(String type, String value){
+    public ResponseEntity<?> check(String type, String value) {
         log.info("/members/check?type={}&value={} ASYNC GET!", type, value);
         boolean flag = memberService.checkSignUpValue(type, value);
         return ResponseEntity.ok().body(flag);
@@ -55,7 +58,7 @@ public class MemberController {
 
     //로그인 양식 요청
     @GetMapping("/sign-in")
-    public String signIn(HttpServletRequest request){
+    public String signIn(HttpServletRequest request) {
         log.info("/members/sign-in GET - forwarding to jsp");
 
         //요청정보 헤어 안에는 referer라는 키가 있는데
@@ -75,13 +78,14 @@ public class MemberController {
                          // Model이 아닌 RedirectAttributes 객체 사용
             , RedirectAttributes ra
             , HttpServletRequest request
-    ){
+            , HttpServletResponse response
+    ) {
         log.info("/members/sign-in POST ! {} ", dto);
 
-        LoginResult result = memberService.authenticate(dto);
+        LoginResult result = memberService.authenticate(dto, request.getSession(), response);
 
         //로그인 성공시
-        if(result == LoginResult.SUCCESS) {
+        if (result == LoginResult.SUCCESS) {
 
             //서버에서 세션에 로그인 정보를 저장
             memberService.maintainLoginState(request.getSession(), dto.getAccount());
@@ -106,13 +110,25 @@ public class MemberController {
 
     //로그아웃 요청 처리
     @GetMapping("/sign-out")
-    public String signOut(HttpSession session){
-        //세션에서 로그인 정보를 제거
-        session.removeAttribute("login");
+    public String signOut(
+            HttpServletRequest request
+            , HttpServletResponse response
+    ) {
+        HttpSession session = request.getSession();
+        //로그인 중인지 확인
+        if (isLogin(session)) {
+            if (isAutoLogin(request)) {
+                memberService.autoLoginClear(request, response);
+            }
+            //세션에서 로그인 정보를 제거
+            session.removeAttribute("login");
 
-        //세션을 초기화
-        session.invalidate();
+            //세션을 초기화
+            session.invalidate();
 
-        return "redirect:/";
+            return "redirect:/";
+        }
+
+        return "redirect:/members/sign-in";
     }
 }
