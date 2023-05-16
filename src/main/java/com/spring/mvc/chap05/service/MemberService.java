@@ -113,6 +113,7 @@ public class MemberService {
                 .email(member.getEmail())
                 .nickname(member.getName())
                 .auth(member.getAuth().toString())
+                .profile(member.getProfileImage())
                 .build();
 
         //dto정보를 세선에 저장

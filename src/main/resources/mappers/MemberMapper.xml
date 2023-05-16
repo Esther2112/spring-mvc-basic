@@ -10,7 +10,7 @@
     </insert>
 
     <select id="findMember" resultType="member">
-        select account, password, name, email, auth, reg_date
+        select account, password, name, email, auth, reg_date, profile_image
         from tbl_member where account = #{account}
     </select>
 

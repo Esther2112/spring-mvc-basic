@@ -46,7 +46,7 @@ public class FileUtil {
         //저장된 파일의 풀경로
         String fullPath = newPath + "/" + newFileName;
 
-        return fullPath.substring(rootPath.length() - 1);
+        return fullPath.substring(rootPath.length());
     }
 
     /**
