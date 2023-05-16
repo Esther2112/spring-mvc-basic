@@ -17,7 +17,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.beans.Encoder;
 import java.time.LocalDateTime;
 
 import static com.spring.mvc.chap05.service.LoginResult.*;
@@ -31,13 +30,14 @@ public class MemberService {
     private final PasswordEncoder encoder;
 
     //회원가입 처리 서비스
-    public boolean join(SignUpRequestDTO dto){
+    public boolean join(final SignUpRequestDTO dto, final String savePath){
         //dto를 entity로 변환
         Member member = Member.builder()
                 .account(dto.getAccount())
                 .email(dto.getEmail())
                 .name(dto.getName())
                 .password(encoder.encode(dto.getPassword()))
+                .profileImage(savePath)
                 .build();
 
         //매퍼에게 회원 정보 전달해서 저장명령

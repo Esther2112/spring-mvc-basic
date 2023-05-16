@@ -43,8 +43,10 @@ public class FileUtil {
             e.printStackTrace();
         }
 
+        //저장된 파일의 풀경로
+        String fullPath = newPath + "/" + newFileName;
 
-        return "";
+        return fullPath.substring(rootPath.length() - 1);
     }
 
     /**
